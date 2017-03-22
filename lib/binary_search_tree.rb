@@ -3,7 +3,7 @@ require 'pry'
 
 class BinarySearchTree
 
-    attr_accessor :node, :right, :left, :root, :node_depth, :root_depth
+    attr_accessor :node, :right, :left, :root, :node_depth, :root_depth, :sorted_list, :right_side_sorted
   
   def initialize
     @node = nil
@@ -12,7 +12,8 @@ class BinarySearchTree
     @root = nil
     @root_depth = 0
     @node_depth = 1
-    
+    @sorted_list = []
+    @right_side_sorted = []
   end
 
   def create_root(score, title)
@@ -72,6 +73,38 @@ class BinarySearchTree
     else
       max(current_node.right)
     end
-
   end
+
+  def min(current_node = root)
+    if current_node.left == nil
+      min_value = {}
+      min_value[current_node.title] = current_node.score
+      min_value
+    else
+      min(current_node.left)
+    end
+  end
+
+  def sort
+  end
+
+#---------------ABORTED SORT--------------------
+  # def sort
+  #   right_side_sorted = find_next_biggest_value
+  #   sorted_list << right_side_sorted
+  # end
+
+  # def find_next_biggest_value(node = root.right)
+    
+  #   if node.left == nil && node.right == nil
+  #     right_side_sorted << node
+  #   elsif node.left == nil
+  #     right_side_sorted << node
+  #     find_next_biggest_value(node.right)
+  #   else
+  #     find_next_biggest_value(node.left)
+  #   end
+  # end
+
+  
 end
