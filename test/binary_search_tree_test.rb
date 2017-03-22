@@ -149,7 +149,31 @@ class BinarySearchTreeTest < Minitest::Test
     refute_equal nil, tree.depth_of(16)
   end
   
+  def test_if_depth_of_returns_nil_if_value_is_absent
+    tree = BinarySearchTree.new
+    tree.create_root(61, "Bill & Ted's Excellent Adventure")
+    tree.insert(16, "Johnny English")
+    tree.insert(92, "Sharknado 3")
+    tree.insert(50, "Hannibal Buress: Animal Furnace")
+    assert_nil tree.depth_of(12)
+  end
 
+  def test_if_depth_of_returns_correct_values
+    tree = BinarySearchTree.new
+    tree.create_root(61, "Bill & Ted's Excellent Adventure")
+    tree.insert(16, "Johnny English")
+    tree.insert(92, "Sharknado 3")
+    tree.insert(50, "Hannibal Buress: Animal Furnace")
+    tree.insert(72, "Ghost")
+    tree.insert(8, "The Matrix")
+    tree.insert(11, "Toy Story")
+    assert_equal 3, tree.depth_of(11)
+    assert_equal 2, tree.depth_of(8)
+    assert_equal 2, tree.depth_of(50)
+    assert_equal 2, tree.depth_of(72)
+    assert_equal 0, tree.depth_of(61)
+    assert_equal 1, tree.depth_of(92)
+  end
   #tree.create_root(61, "Bill & Ted's Excellent Adventure")
   #tree.insert(16, "Johnny English")
   #tree.insert(92, "Sharknado 3")
