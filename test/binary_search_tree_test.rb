@@ -190,8 +190,11 @@ class BinarySearchTreeTest < Minitest::Test
     tree.insert(16, "Johnny English")
     tree.insert(92, "Sharknado 3")
     tree.insert(50, "Hannibal Buress: Animal Furnace")
-    assert_equal "Sharknado 3", tree.max
+    assert_equal [92], tree.max.values
+    assert_equal ["Sharknado 3"], tree.max.keys
   end
+
+
   #tree.create_root(61, "Bill & Ted's Excellent Adventure")
   #tree.insert(16, "Johnny English")
   #tree.insert(92, "Sharknado 3")

@@ -66,7 +66,9 @@ class BinarySearchTree
   
   def max(current_node = root)
     if current_node.right == nil
-      current_node.title
+      max_value = {}
+      max_value[current_node.title] = current_node.score
+      max_value
     else
       max(current_node.right)
     end
