@@ -20,36 +20,49 @@ class BinarySearchTree
     @root_depth
   end
 
-  def insert(score, title, node = root)
+  def insert(score, title, node = root, node_depth = 1)
     if score < node.score && node.left == nil
       node.left = Node.new(score, title)
-      @node_depth
+      node_depth
     elsif score > node.score && node.right == nil
       node.right = Node.new(score, title)
-      @node_depth
+      node_depth
     elsif score < node.score
-      @node_depth +=1
-      insert(score, title, node.left)
+      
+      insert(score, title, node.left, (node_depth + 1))
     else score > node.score
-      @node_depth +=1
-      insert(score, title, node.right)
+      
+      insert(score, title, node.right, (node_depth + 1))
     end
   end
 
   def include?(value, include_node = root)
-    if include_node.score = value
+    if include_node.score == value
       true
-    elsif include_node.score < value && include_node.left == nil
+    elsif include_node.score < value && include_node.right == nil
       false
-    elsif include_node.score > value && include_node.right == nil
+    elsif include_node.score > value && include_node.left == nil
       false
     elsif include_node.score < value
-      include?(value, include_node.left)
-    else include_node.score > value
       include?(value, include_node.right)
+    else include_node.score > value
+      include?(value, include_node.left)
     end
   end
     
+  # def depth_of(value, current_depth = root)
+  #   if current_depth.score == value
+  #     true
+  #   elsif include_node.score < value && include_node.right == nil
+  #     false
+  #   elsif include_node.score > value && include_node.left == nil
+  #     false
+  #   elsif include_node.score < value
+  #     include?(value, include_node.right)
+  #   else include_node.score > value
+  #     include?(value, include_node.left)
+  #   end
+  # end
   
 
 end

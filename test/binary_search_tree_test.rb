@@ -70,6 +70,34 @@ class BinarySearchTreeTest < Minitest::Test
     assert_equal "Jurassic World", tree.root.left.right.title
   end
 
+  def test_if_insert_can_insert_left_of_root_then_right_of_root
+    tree = BinarySearchTree.new
+    tree.create_root(50, "Kill Bill Vol. 1")
+    tree.insert(40, "The Matrix")
+    tree.insert(60, "Jurassic World")
+    assert_equal "The Matrix", tree.root.left.title
+    assert_equal "Jurassic World", tree.root.right.title
+  end
+
+  def test_if_insert_inserts_at_predictable_locations
+    tree = BinarySearchTree.new
+    tree.create_root(61, "Bill & Ted's Excellent Adventure")
+    tree.insert(16, "Johnny English")
+    tree.insert(92, "Sharknado 3")
+    tree.insert(50, "Hannibal Buress: Animal Furnace")
+    tree.insert(72, "Ghost")
+    tree.insert(8, "The Matrix")
+    tree.insert(11, "Toy Story")
+    assert_equal tree.root.score, 61
+    assert_equal tree.root.left.score, 16
+    assert_equal tree.root.right.score, 92
+    assert_equal tree.root.left.right.score, 50
+    assert_equal tree.root.right.left.score, 72
+    assert_equal tree.root.left.left.score, 8
+    assert_equal tree.root.left.left.right.score, 11
+  end
+
+
   def test_if_create_root_returns_depth_of_insertion
     tree = BinarySearchTree.new
     a = tree.create_root(50, "Kill Bill Vol. 1")
@@ -82,10 +110,16 @@ class BinarySearchTreeTest < Minitest::Test
     b = tree.insert(16, "Johnny English")
     c = tree.insert(92, "Sharknado 3")
     d = tree.insert(50, "Hannibal Buress: Animal Furnace")
+    e = tree.insert(72, "Ghost")
+    f = tree.insert(8, "The Matrix")
+    g = tree.insert(11, "Toy Story")
     assert_equal a, 0
     assert_equal b, 1
     assert_equal c, 1
     assert_equal d, 2
+    assert_equal e, 2
+    assert_equal f, 2
+    assert_equal g, 3
   end
 
   def test_if_include_verifies_presence_of_score
@@ -96,6 +130,26 @@ class BinarySearchTreeTest < Minitest::Test
     tree.insert(50, "Hannibal Buress: Animal Furnace")
     assert_equal true, tree.include?(16)
   end
+
+  def test_if_include_verifies_absense_of_score
+    tree = BinarySearchTree.new
+    tree.create_root(61, "Bill & Ted's Excellent Adventure")
+    tree.insert(16, "Johnny English")
+    tree.insert(92, "Sharknado 3")
+    tree.insert(50, "Hannibal Buress: Animal Furnace")
+    assert_equal false, tree.include?(12)
+  end
+
+  def test_if_depth_of_exists
+    tree = BinarySearchTree.new
+    tree.create_root(61, "Bill & Ted's Excellent Adventure")
+    tree.insert(16, "Johnny English")
+    tree.insert(92, "Sharknado 3")
+    tree.insert(50, "Hannibal Buress: Animal Furnace")
+    refute_equal nil, tree.depth_of(16)
+  end
+  
+
   #tree.create_root(61, "Bill & Ted's Excellent Adventure")
   #tree.insert(16, "Johnny English")
   #tree.insert(92, "Sharknado 3")
