@@ -174,6 +174,24 @@ class BinarySearchTreeTest < Minitest::Test
     assert_equal 0, tree.depth_of(61)
     assert_equal 1, tree.depth_of(92)
   end
+
+  def test_if_max_exists
+    tree = BinarySearchTree.new
+    tree.create_root(61, "Bill & Ted's Excellent Adventure")
+    tree.insert(16, "Johnny English")
+    tree.insert(92, "Sharknado 3")
+    tree.insert(50, "Hannibal Buress: Animal Furnace")
+    refute_equal nil, tree.max
+  end
+
+  def test_if_max_returns_title_with_highest_score
+    tree = BinarySearchTree.new
+    tree.create_root(61, "Bill & Ted's Excellent Adventure")
+    tree.insert(16, "Johnny English")
+    tree.insert(92, "Sharknado 3")
+    tree.insert(50, "Hannibal Buress: Animal Furnace")
+    assert_equal "Sharknado 3", tree.max
+  end
   #tree.create_root(61, "Bill & Ted's Excellent Adventure")
   #tree.insert(16, "Johnny English")
   #tree.insert(92, "Sharknado 3")

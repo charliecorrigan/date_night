@@ -64,5 +64,12 @@ class BinarySearchTree
     end
   end
   
+  def max(current_node = root)
+    if current_node.right == nil
+      current_node.title
+    else
+      max(current_node.right)
+    end
 
+  end
 end
