@@ -34,10 +34,21 @@ class BinarySearchTree
       @node_depth +=1
       insert(score, title, node.right)
     end
-
   end
-    
-    
+
+  def include?(value, include_node = root)
+    if include_node.score = value
+      true
+    elsif include_node.score < value && include_node.left == nil
+      false
+    elsif include_node.score > value && include_node.right == nil
+      false
+    elsif include_node.score < value
+      include?(value, include_node.left)
+    else include_node.score > value
+      include?(value, include_node.right)
+    end
+  end
     
   
 
