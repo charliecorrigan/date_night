@@ -29,10 +29,8 @@ class BinarySearchTree
       node.right = Node.new(score, title, node)
       node_depth
     elsif score < node.score
-      
       insert(score, title, node.left, (node_depth + 1))
     else score > node.score
-      
       insert(score, title, node.right, (node_depth + 1))
     end
   end
@@ -106,20 +104,20 @@ class BinarySearchTree
     format_sorted_list
   end
 
-  def presort(current_node = root)
-    return @sorted_list if current_node == root && (current_node.left == nil || @sorted_list.include?(current_node.left)) && (current_node.right == nil || @sorted_list.include?(current_node.right))
-      if current_node.left != nil && @sorted_list.include?(current_node.left) == false
-        presort(current_node.left)
+  def presort(node = root)
+    return @sorted_list if node == root && (node_childless_on_left?(node) || @sorted_list.include?(node.left)) && (node_childless_on_right?(node) || @sorted_list.include?(node.right))
+      if !node_childless_on_left?(node) && @sorted_list.include?(node.left) == false
+        presort(node.left)
       else
-        @sorted_list << current_node
-        if current_node.right != nil && @sorted_list.include?(current_node.right) == false
-          presort(current_node.right)
+        @sorted_list << node
+        if !node_childless_on_right?(node) && @sorted_list.include?(node.right) == false
+          presort(node.right)
         else
-          while @sorted_list.include?(current_node.parent) == true
-            current_node = current_node.parent
+          while @sorted_list.include?(node.parent) == true
+            node = node.parent
           end
-          return @sorted_list if current_node == root && (current_node.left == nil || @sorted_list.include?(current_node.left)) && (current_node.right == nil || @sorted_list.include?(current_node.right))
-          presort(current_node.parent)
+          return @sorted_list if node == root && (node_childless_on_left?(node) || @sorted_list.include?(node.left)) && (node_childless_on_right?(node) || @sorted_list.include?(node.right))
+          presort(node.parent)
         end
       end
     end
@@ -132,23 +130,60 @@ class BinarySearchTree
       new_list
     end
 
+    # def load(text_file)
+    #   new_file = File.open(text_file, "r")
+    #   movies = new_file.read
+    #   movies_array = movies.split("\n").to_a.map do |each| #"71, Hannibal Buress: Animal Furnace"
+    #     each.split(",").to_a
+    #   end
+    #   formatted_movies = []
+    #   movies_array.map do |value_pair| #["71", "Hannibal Buress: Animal Furnace"]
+    #     value_pair[0] = value_pair[0].to_i
+    #     value_pair[1] = value_pair[1].lstrip
+    #     formatted_movies << [value_pair[0], value_pair[1]]
+    #   end
+    #   counter = 0
+    #   formatted_movies.each do |value_pair|
+    #     if counter < 1
+    #       create_root(value_pair[0], value_pair[1])
+    #     else
+    #       insert(value_pair[0], value_pair[1])
+    #     end
+    #     counter += 1
+    #   end
+    #   counter
+    # end
+      
     def load(text_file)
+      load_file_to_variable(text_file)
+      split_text_into_arrays
+      format_arrays_for_input
+      input_arrays_into_tree
+    end
+
+    def load_file_to_variable(text_file)
       new_file = File.open(text_file, "r")
-      movies = new_file.read
-      movies_array = movies.split("\n").to_a.map do |each| #"71, Hannibal Buress: Animal Furnace"
+      @movies = new_file.read
+    end
+
+    def split_text_into_arrays
+      @movies_array = @movies.split("\n").to_a.map do |each| #"71, Hannibal Buress: Animal Furnace"
         each.split(",").to_a
       end
-      
-      formatted_movies = []
-      movies_array.map do |value_pair| #["71", "Hannibal Buress: Animal Furnace"]
+    end
+
+    def format_arrays_for_input
+      @formatted_movies = []
+      @movies_array.map do |value_pair| #["71", "Hannibal Buress: Animal Furnace"]
         value_pair[0] = value_pair[0].to_i
         value_pair[1] = value_pair[1].lstrip
-        formatted_movies << [value_pair[0], value_pair[1]]
+        @formatted_movies << [value_pair[0], value_pair[1]]
       end
+    end
 
+    def input_arrays_into_tree
       counter = 0
-      
-      formatted_movies.each do |value_pair|
+      @formatted_movies.each do |value_pair|
         if counter < 1
           create_root(value_pair[0], value_pair[1])
         else
@@ -157,8 +192,6 @@ class BinarySearchTree
         counter += 1
       end
       counter
-    end
-      
-   
+    end 
     
 end
