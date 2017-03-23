@@ -25,7 +25,7 @@ class BinarySearchTree
     if score < node.score && node_childless_on_left?(node)
       node.left = Node.new(score, title, node)
       node_depth
-    elsif score > node.score && node.right == nil
+    elsif score > node.score && node_childless_on_right?(node)
       node.right = Node.new(score, title, node)
       node_depth
     elsif score < node.score
@@ -56,7 +56,7 @@ class BinarySearchTree
   def include?(value, node = root)
     if node.score == value
       true
-    elsif node.score < value && node.right == nil
+    elsif node.score < value && node_childless_on_right?(node)
       false
     elsif node.score > value && node_childless_on_left?(node)
       false
@@ -67,27 +67,27 @@ class BinarySearchTree
     end
   end
     
-  def depth_of(value, current_node = root, current_depth_of = 0)
-    if current_node.score == value
+  def depth_of(value, node = root, current_depth_of = 0)
+    if node.score == value
       current_depth_of
-    elsif current_node.score < value && current_node.right == nil
+    elsif node.score < value && node_childless_on_right?(node)
       nil
-    elsif current_node.score > value && current_node.left == nil
+    elsif node.score > value && node_childless_on_left?(node)
       nil
-    elsif current_node.score < value
-      depth_of(value, current_node.right, (current_depth_of + 1))
-    else current_node.score > value
-      depth_of(value, current_node.left, (current_depth_of + 1))
+    elsif node.score < value
+      depth_of(value, node.right, (current_depth_of + 1))
+    else node.score > value
+      depth_of(value, node.left, (current_depth_of + 1))
     end
   end
   
-  def max(current_node = root)
-    if current_node.right == nil
+  def max(node = root)
+    if node.right == nil
       max_value = {}
-      max_value[current_node.title] = current_node.score
+      max_value[node.title] = node.score
       max_value
     else
-      max(current_node.right)
+      max(node.right)
     end
   end
 
