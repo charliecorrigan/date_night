@@ -282,5 +282,40 @@ class BinarySearchTreeTest < Minitest::Test
     assert_equal 99, x
   end
 
+  def test_node_has_children_to_left_can_access_node_info
+    tree = BinarySearchTree.new
+    tree.create_root(61, "Bill & Ted's Excellent Adventure")
+    tree.insert(16, "Johnny English")
+    tree.insert(92, "Sharknado 3")
+    tree.insert(50, "Hannibal Buress: Animal Furnace")
+    assert_equal tree.node_childless_on_left?(tree.root), false
+  end
+
+  def test_node_has_children_to_left_can_return_false
+    tree = BinarySearchTree.new
+    tree.create_root(61, "Bill & Ted's Excellent Adventure")
+    tree.insert(16, "Johnny English")
+    tree.insert(92, "Sharknado 3")
+    tree.insert(50, "Hannibal Buress: Animal Furnace")
+    assert_equal tree.node_childless_on_left?(tree.root.left), true
+  end
+
+  def test_node_has_children_to_right_can_access_node_info
+    tree = BinarySearchTree.new
+    tree.create_root(61, "Bill & Ted's Excellent Adventure")
+    tree.insert(16, "Johnny English")
+    tree.insert(92, "Sharknado 3")
+    tree.insert(50, "Hannibal Buress: Animal Furnace")
+    assert_equal tree.node_childless_on_right?(tree.root), false
+  end
+
+  def test_node_has_children_to_right_can_return_false
+    tree = BinarySearchTree.new
+    tree.create_root(61, "Bill & Ted's Excellent Adventure")
+    tree.insert(16, "Johnny English")
+    tree.insert(92, "Sharknado 3")
+    tree.insert(50, "Hannibal Buress: Animal Furnace")
+    assert_equal tree.node_childless_on_right?(tree.root.right), true
+  end
 end
 

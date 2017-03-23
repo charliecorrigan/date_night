@@ -14,7 +14,6 @@ class BinarySearchTree
     @root_depth = 0
     @node_depth = 1
     @sorted_list = []
-    @right_side_sorted = []
   end
 
   def create_root(score, title)
@@ -23,7 +22,7 @@ class BinarySearchTree
   end
 
   def insert(score, title, node = root, node_depth = 1)
-    if score < node.score && node.left == nil
+    if score < node.score && node_childless_on_left?(node)
       node.left = Node.new(score, title, node)
       node_depth
     elsif score > node.score && node.right == nil
@@ -38,17 +37,33 @@ class BinarySearchTree
     end
   end
 
-  def include?(value, include_node = root)
-    if include_node.score == value
+  def node_childless_on_left?(node)
+    if node.left == nil
       true
-    elsif include_node.score < value && include_node.right == nil
+    else
       false
-    elsif include_node.score > value && include_node.left == nil
+    end
+  end
+
+  def node_childless_on_right?(node)
+    if node.right == nil
+      true
+    else
       false
-    elsif include_node.score < value
-      include?(value, include_node.right)
-    else include_node.score > value
-      include?(value, include_node.left)
+    end
+  end
+
+  def include?(value, node = root)
+    if node.score == value
+      true
+    elsif node.score < value && node.right == nil
+      false
+    elsif node.score > value && node_childless_on_left?(node)
+      false
+    elsif node.score < value
+      include?(value, node.right)
+    else node.score > value
+      include?(value, node.left)
     end
   end
     
@@ -141,16 +156,6 @@ class BinarySearchTree
       counter
     end
       
-    # def insert_by_array_of_arrays
-    #   counter = 0
-    #   test_input = [[50, "Titanic"],[20, "Grandma's Boy"],[98, "Twister"]]
-
-    #   test_input.each do |value_pair|
-        
-    #     insert(value_pair[0], value_pair[1])
-    #     counter += 1
-    #   end
-      
-    # end
+   
     
 end
