@@ -2,12 +2,12 @@ class Node
 
   attr_accessor :score, :title, :left, :right, :parent
 
-  def initialize(score, title)
+  def initialize(score, title, parent = nil)
     @score = score
     @title = title
     @left = nil
     @right = nil
-    @parent = nil
+    @parent = parent
   end
   
 

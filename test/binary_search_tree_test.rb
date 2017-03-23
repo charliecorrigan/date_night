@@ -23,7 +23,7 @@ class BinarySearchTreeTest < Minitest::Test
   def test_root_parent_is_nil
     tree = BinarySearchTree.new
     tree.create_root(99, "Kill Bill Vol. 1")
-    assert_equal nil, tree.root.parent
+    assert_nil = tree.root.parent
   end
 
   def test_if_inserting_node_to_root_on_left
@@ -103,6 +103,19 @@ class BinarySearchTreeTest < Minitest::Test
     assert_equal tree.root.left.left.right.score, 11
   end
 
+  def test_if_node_parent_is_initializing_correctly
+    tree = BinarySearchTree.new
+    tree.create_root(61, "Bill & Ted's Excellent Adventure")
+    tree.insert(16, "Johnny English")
+    tree.insert(92, "Sharknado 3")
+    tree.insert(50, "Hannibal Buress: Animal Furnace")
+    tree.insert(72, "Ghost")
+    tree.insert(8, "The Matrix")
+    tree.insert(11, "Toy Story")
+    assert_equal tree.root.left.parent, tree.root
+    assert_equal tree.root.right.left.parent, tree.root.right
+    assert_equal tree.root.left.right.parent, tree.root.left
+  end
 
   def test_if_create_root_returns_depth_of_insertion
     tree = BinarySearchTree.new
@@ -225,74 +238,36 @@ class BinarySearchTreeTest < Minitest::Test
     tree.insert(16, "Johnny English")
     tree.insert(92, "Sharknado 3")
     tree.insert(50, "Hannibal Buress: Animal Furnace")
-    refute_equal tree.sort, nil
+    refute_equal tree.sort_left_side, nil
   end
 
-#---------------ABORTED SORT------------------------
-  # def test_if_sort_exists
-  #   tree = BinarySearchTree.new
-  #   tree.create_root(61, "Bill & Ted's Excellent Adventure")
-  #   tree.insert(16, "Johnny English")
-  #   tree.insert(92, "Sharknado 3")
-  #   tree.insert(50, "Hannibal Buress: Animal Furnace")
-  #   refute_equal tree.sort, nil
-  # end
+  def test_if_sorted_list_returns_array
+    tree = BinarySearchTree.new
+    tree.create_root(61, "Bill & Ted's Excellent Adventure")
+    tree.insert(16, "Johnny English")
+    tree.insert(92, "Sharknado 3")
+    tree.insert(50, "Hannibal Buress: Animal Furnace")
+    assert_equal tree.sort_left_side.class, Array
+  end
 
-  # def test_if_sort_returns_array
-  #   tree = BinarySearchTree.new
-  #   tree.create_root(61, "Bill & Ted's Excellent Adventure")
-  #   tree.insert(16, "Johnny English")
-  #   tree.insert(92, "Sharknado 3")
-  #   tree.insert(50, "Hannibal Buress: Animal Furnace")
-  #   assert_equal tree.sort.class, Array
-  # end
+  def test_if_sorted_list_returns_sorted_list
+    tree = BinarySearchTree.new
+    tree.create_root(61, "Bill & Ted's Excellent Adventure")
+    tree.insert(16, "Johnny English")
+    tree.insert(92, "Sharknado 3")
+    tree.insert(50, "Hannibal Buress: Animal Furnace")
+    refute_equal tree.sort_left_side, nil
+  end
 
-  # def test_sort_right_side
-  #   skip
-  #   tree = BinarySearchTree.new
-  #   tree.create_root(61, "Bill & Ted's Excellent Adventure")
-  #   tree.insert(16, "Johnny English")
-  #   tree.insert(92, "Sharknado 3")
-  #   tree.insert(50, "Hannibal Buress: Animal Furnace")
-  #   tree.insert(72, "Ghost")
-  #   tree.insert(8, "The Matrix")
-  #   tree.insert(11, "Toy Story")
-  #   assert_equal sorted_list.count, 2
-  # end
-
-  # def test_find_next_biggest_value_exists
-  #   tree = BinarySearchTree.new
-  #   tree.create_root(61, "Bill & Ted's Excellent Adventure")
-  #   tree.insert(16, "Johnny English")
-  #   tree.insert(92, "Sharknado 3")
-  #   tree.insert(50, "Hannibal Buress: Animal Furnace")
-  #   tree.insert(72, "Ghost")
-  #   tree.insert(8, "The Matrix")
-  #   tree.insert(11, "Toy Story")
-  #   refute_equal tree.find_next_biggest_value, nil
-  # end
-
-  # def test_find_next_biggest_value_returns_array
-  #   tree = BinarySearchTree.new
-  #   tree.create_root(61, "Bill & Ted's Excellent Adventure")
-  #   tree.insert(16, "Johnny English")
-  #   tree.insert(92, "Sharknado 3")
-  #   tree.insert(50, "Hannibal Buress: Animal Furnace")
-  #   tree.insert(72, "Ghost")
-  #   tree.insert(8, "The Matrix")
-  #   tree.insert(99, "Princess Bride")
-  #   tree.insert(68, "Scary Movie")
-  #   tree.insert(11, "Toy Story")
-  #   assert_equal tree.find_next_biggest_value, ["stuff"]
-  # end
-
-  # def test_find_next_smallest_vale_exists
-  #   skip
-  # end
-  #tree.create_root(61, "Bill & Ted's Excellent Adventure")
-  #tree.insert(16, "Johnny English")
-  #tree.insert(92, "Sharknado 3")
-  #tree.insert(50, "Hannibal Buress: Animal Furnace")
+  def test_if_format_sorted_list_exists
+    tree = BinarySearchTree.new
+    tree.create_root(61, "Bill & Ted's Excellent Adventure")
+    tree.insert(16, "Johnny English")
+    tree.insert(92, "Sharknado 3")
+    tree.insert(50, "Hannibal Buress: Animal Furnace")
+    tree.sort_left_side
+    assert_equal tree.format_sorted_list, [{"Johnny English"=>16}, {"Hannibal Buress: Animal Furnace"=>50}, {"Bill & Ted's Excellent Adventure"=>61}, {"Sharknado 3"=>92}]
+  end
 
 end
 

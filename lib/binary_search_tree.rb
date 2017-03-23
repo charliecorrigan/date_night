@@ -3,12 +3,13 @@ require 'pry'
 
 class BinarySearchTree
 
-    attr_accessor :node, :right, :left, :root, :node_depth, :root_depth, :sorted_list, :right_side_sorted
+    attr_accessor :node, :right, :left, :parent, :root, :node_depth, :root_depth, :sorted_list, :right_side_sorted
   
   def initialize
     @node = nil
     @right = nil
     @left = nil
+    @parent = nil
     @root = nil
     @root_depth = 0
     @node_depth = 1
@@ -23,10 +24,10 @@ class BinarySearchTree
 
   def insert(score, title, node = root, node_depth = 1)
     if score < node.score && node.left == nil
-      node.left = Node.new(score, title)
+      node.left = Node.new(score, title, node)
       node_depth
     elsif score > node.score && node.right == nil
-      node.right = Node.new(score, title)
+      node.right = Node.new(score, title, node)
       node_depth
     elsif score < node.score
       
@@ -85,26 +86,33 @@ class BinarySearchTree
     end
   end
 
-  def sort
-  end
 
-#---------------ABORTED SORT--------------------
-  # def sort
-  #   right_side_sorted = find_next_biggest_value
-  #   sorted_list << right_side_sorted
-  # end
-
-  # def find_next_biggest_value(node = root.right)
-    
-  #   if node.left == nil && node.right == nil
-  #     right_side_sorted << node
-  #   elsif node.left == nil
-  #     right_side_sorted << node
-  #     find_next_biggest_value(node.right)
-  #   else
-  #     find_next_biggest_value(node.left)
-  #   end
-  # end
-
+  def sort_left_side(current_node = root)
   
+    return @sorted_list if current_node == root && (current_node.left == nil || @sorted_list.include?(current_node.left)) && (current_node.right == nil || @sorted_list.include?(current_node.right))
+      if current_node.left != nil && @sorted_list.include?(current_node.left) == false
+        sort_left_side(current_node.left)
+      else
+        @sorted_list << current_node
+        if current_node.right != nil && @sorted_list.include?(current_node.right) == false
+          sort_left_side(current_node.right)
+        else
+          while @sorted_list.include?(current_node.parent) == true
+            current_node = current_node.parent
+          end
+          return @sorted_list if current_node == root && (current_node.left == nil || @sorted_list.include?(current_node.left)) && (current_node.right == nil || @sorted_list.include?(current_node.right))
+          sort_left_side(current_node.parent)
+        end
+      end
+    end
+
+    def format_sorted_list
+      new_list = []
+      @sorted_list.each do |item| 
+        new_list << {item.title=> item.score}
+      end
+      new_list
+      
+    end
+
 end
