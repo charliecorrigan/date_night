@@ -232,13 +232,13 @@ class BinarySearchTreeTest < Minitest::Test
     assert_equal ["Johnny English"], tree.min.keys
   end
 
-  def test_if_sort_exists
+  def test_if_presort_exists
     tree = BinarySearchTree.new
     tree.create_root(61, "Bill & Ted's Excellent Adventure")
     tree.insert(16, "Johnny English")
     tree.insert(92, "Sharknado 3")
     tree.insert(50, "Hannibal Buress: Animal Furnace")
-    refute_equal tree.sort_left_side, nil
+    refute_equal tree.presort, nil
   end
 
   def test_if_sorted_list_returns_array
@@ -247,16 +247,16 @@ class BinarySearchTreeTest < Minitest::Test
     tree.insert(16, "Johnny English")
     tree.insert(92, "Sharknado 3")
     tree.insert(50, "Hannibal Buress: Animal Furnace")
-    assert_equal tree.sort_left_side.class, Array
+    assert_equal tree.presort.class, Array
   end
 
-  def test_if_sorted_list_returns_sorted_list
+  def test_if_presort_returns_sorted_list
     tree = BinarySearchTree.new
     tree.create_root(61, "Bill & Ted's Excellent Adventure")
     tree.insert(16, "Johnny English")
     tree.insert(92, "Sharknado 3")
     tree.insert(50, "Hannibal Buress: Animal Furnace")
-    refute_equal tree.sort_left_side, nil
+    refute_equal tree.presort, nil
   end
 
   def test_if_format_sorted_list_exists
@@ -265,10 +265,13 @@ class BinarySearchTreeTest < Minitest::Test
     tree.insert(16, "Johnny English")
     tree.insert(92, "Sharknado 3")
     tree.insert(50, "Hannibal Buress: Animal Furnace")
-    tree.sort_left_side
+    tree.presort
     assert_equal tree.format_sorted_list, [{"Johnny English"=>16}, {"Hannibal Buress: Animal Furnace"=>50}, {"Bill & Ted's Excellent Adventure"=>61}, {"Sharknado 3"=>92}]
   end
 
+##TODO
+#Rename sort_left_side to presort
+#Get sort function running that calls presort and format sort
   def test_if_load_exists
     
     tree = BinarySearchTree.new

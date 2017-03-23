@@ -91,32 +91,32 @@ class BinarySearchTree
     end
   end
 
-  def min(current_node = root)
-    if current_node.left == nil
+  def min(node = root)
+    if node.left == nil
       min_value = {}
-      min_value[current_node.title] = current_node.score
+      min_value[node.title] = node.score
       min_value
     else
-      min(current_node.left)
+      min(node.left)
     end
   end
 
 
-  def sort_left_side(current_node = root)
+  def presort(current_node = root)
   
     return @sorted_list if current_node == root && (current_node.left == nil || @sorted_list.include?(current_node.left)) && (current_node.right == nil || @sorted_list.include?(current_node.right))
       if current_node.left != nil && @sorted_list.include?(current_node.left) == false
-        sort_left_side(current_node.left)
+        presort(current_node.left)
       else
         @sorted_list << current_node
         if current_node.right != nil && @sorted_list.include?(current_node.right) == false
-          sort_left_side(current_node.right)
+          presort(current_node.right)
         else
           while @sorted_list.include?(current_node.parent) == true
             current_node = current_node.parent
           end
           return @sorted_list if current_node == root && (current_node.left == nil || @sorted_list.include?(current_node.left)) && (current_node.right == nil || @sorted_list.include?(current_node.right))
-          sort_left_side(current_node.parent)
+          presort(current_node.parent)
         end
       end
     end
