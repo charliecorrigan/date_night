@@ -269,8 +269,24 @@ class BinarySearchTreeTest < Minitest::Test
     assert_equal tree.format_sorted_list, [{"Johnny English"=>16}, {"Hannibal Buress: Animal Furnace"=>50}, {"Bill & Ted's Excellent Adventure"=>61}, {"Sharknado 3"=>92}]
   end
 
+  def test_if_sort_exists
+    tree = BinarySearchTree.new
+    tree.create_root(61, "Bill & Ted's Excellent Adventure")
+    tree.insert(16, "Johnny English")
+    tree.insert(92, "Sharknado 3")
+    tree.insert(50, "Hannibal Buress: Animal Furnace")
+    refute_nil = tree.sort
+  end
+
+  def test_if_sort_returns_list_sorted_and_formatted_correctly
+    tree = BinarySearchTree.new
+    tree.create_root(61, "Bill & Ted's Excellent Adventure")
+    tree.insert(16, "Johnny English")
+    tree.insert(92, "Sharknado 3")
+    tree.insert(50, "Hannibal Buress: Animal Furnace")
+    assert_equal tree.sort, [{"Johnny English"=>16}, {"Hannibal Buress: Animal Furnace"=>50}, {"Bill & Ted's Excellent Adventure"=>61}, {"Sharknado 3"=>92}]
+  end
 ##TODO
-#Rename sort_left_side to presort
 #Get sort function running that calls presort and format sort
   def test_if_load_exists
     

@@ -101,9 +101,12 @@ class BinarySearchTree
     end
   end
 
+  def sort
+    presort
+    format_sorted_list
+  end
 
   def presort(current_node = root)
-  
     return @sorted_list if current_node == root && (current_node.left == nil || @sorted_list.include?(current_node.left)) && (current_node.right == nil || @sorted_list.include?(current_node.right))
       if current_node.left != nil && @sorted_list.include?(current_node.left) == false
         presort(current_node.left)
