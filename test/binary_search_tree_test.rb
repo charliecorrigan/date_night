@@ -269,5 +269,18 @@ class BinarySearchTreeTest < Minitest::Test
     assert_equal tree.format_sorted_list, [{"Johnny English"=>16}, {"Hannibal Buress: Animal Furnace"=>50}, {"Bill & Ted's Excellent Adventure"=>61}, {"Sharknado 3"=>92}]
   end
 
+  def test_if_load_exists
+    
+    tree = BinarySearchTree.new
+    x = tree.load('movies.txt')
+    refute_nil = x
+  end
+
+  def test_output_of_load
+    tree = BinarySearchTree.new
+    x = tree.load('movies.txt')
+    assert_equal 99, x
+  end
+
 end
 

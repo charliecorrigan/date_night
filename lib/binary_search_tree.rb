@@ -3,7 +3,7 @@ require 'pry'
 
 class BinarySearchTree
 
-    attr_accessor :node, :right, :left, :parent, :root, :node_depth, :root_depth, :sorted_list, :right_side_sorted
+    attr_accessor :node, :right, :left, :parent, :root, :node_depth, :root_depth, :sorted_list
   
   def initialize
     @node = nil
@@ -112,7 +112,45 @@ class BinarySearchTree
         new_list << {item.title=> item.score}
       end
       new_list
-      
     end
 
+    def load(text_file)
+      new_file = File.open(text_file, "r")
+      movies = new_file.read
+      movies_array = movies.split("\n").to_a.map do |each| #"71, Hannibal Buress: Animal Furnace"
+        each.split(",").to_a
+      end
+      
+      formatted_movies = []
+      movies_array.map do |value_pair| #["71", "Hannibal Buress: Animal Furnace"]
+        value_pair[0] = value_pair[0].to_i
+        value_pair[1] = value_pair[1].lstrip
+        formatted_movies << [value_pair[0], value_pair[1]]
+      end
+
+      counter = 0
+      
+      formatted_movies.each do |value_pair|
+        if counter < 1
+          create_root(value_pair[0], value_pair[1])
+        else
+          insert(value_pair[0], value_pair[1])
+        end
+        counter += 1
+      end
+      counter
+    end
+      
+    # def insert_by_array_of_arrays
+    #   counter = 0
+    #   test_input = [[50, "Titanic"],[20, "Grandma's Boy"],[98, "Twister"]]
+
+    #   test_input.each do |value_pair|
+        
+    #     insert(value_pair[0], value_pair[1])
+    #     counter += 1
+    #   end
+      
+    # end
+    
 end
